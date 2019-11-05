@@ -1,7 +1,7 @@
-package com.ljq.leetcode;
+package com.l.leetcode;
 
 /**
- * @author : LJQ
+ * @author : sin97.cn
  * @date : 2019/10/30 18:30
  */
 public class LongestSub {

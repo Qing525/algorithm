@@ -1,12 +1,12 @@
-package com.ljq.leetcode;
+package com.l.leetcode;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author : LJQ
- * @date : 2019/10/30 17:45
+ * @author : sin97.cn
+ * @date : 2019/10/31 17:45
  */
 public class TwoSum {
     private static int[] twoSum(int[] no, int target) {
