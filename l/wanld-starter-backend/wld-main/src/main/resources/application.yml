@@ -1,0 +1,61 @@
+#server:
+#  servlet:
+#    session:
+#      timeout: 30m
+
+spring:
+  jackson:
+    #设置程序运程的时区为东8区；同时可避免传给前端的时间是UTC
+    time-zone: GMT+8
+  profiles:
+    active: @active-env@
+  session:
+    store-type: redis
+    redis:
+      namespace: spring:session
+  data:
+    redis:
+      repositories:
+        enabled: false
+      #flush-mode: on_save
+  cache:
+    redis:
+      time-to-live: 1m
+
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  tokenHead: Bearer  #JWT负载中拿到开头
+  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # token is valid 24 hours
+  token-validity-in-seconds: 86400
+  # valid 30 hours
+  token-validity-in-seconds-for-remember-me: 108000
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+aliyun:
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
+    accessKeyId: test # 访问身份验证中用到用户标识
+    accessKeySecret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: macro-oss # oss的存储空间
+    policy:
+      expire: 300 # 签名有效期(S)
+    maxSize: 10 # 上传文件大小(M)
+    callback: http://39.98.190.128:8080/aliyun/oss/callback # 文件上传成功后的回调地址
+    dir:
+      prefix: mall/images/ # 上传文件夹路径前缀
+
+logging:
+  level:
+    root: info #日志配置DEBUG,INFO,WARN,ERROR
+    com.wld: debug
+  #  file: demo_log.log #配置日志生成路径
+  config: classpath:logback-spring.xml
+  path: ./logs
+
+default:
+  password: 123456

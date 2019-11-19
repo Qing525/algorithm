@@ -1,0 +1,17 @@
+<div class="container mt-3">
+    <div class="cont card">
+        <div class="card-body">
+            <h3 class="text-center">邮件验证：</h3>
+            <hr>
+
+            <p *ngIf="email">
+                您邮箱验证成功！
+                <a [routerLink]="['/login']">返回登录</a>
+            </p>
+
+            <p *ngIf="error">
+                {{error.message}}
+            </p>
+        </div>
+    </div>
+</div>

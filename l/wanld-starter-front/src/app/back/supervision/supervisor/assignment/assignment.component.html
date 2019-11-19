@@ -1,0 +1,65 @@
+<div class="inner-content">
+    <div nz-row class="task-row mb-7">
+        <div nz-col nzSpan="12">
+            <nz-page-header nzBackIcon nzTitle="子任务列表" nzSubtitle="拆分任务"> </nz-page-header>
+        </div>
+        <div nz-col nzSpan="12">
+            <button
+                nz-tooltip
+                nz-button
+                nzTooltipTitle="分解任务"
+                nzTooltipPlacement="left"
+                class="float-right"
+                nzType="primary"
+                nzShape="circle"
+                (click)="isVisible = true"
+            >
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+            </button>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="36" class="task-row">
+        <ng-container *ngIf="subTasks; else elseTemplate">
+            <div *ngFor="let task of subTasks">
+                <div nz-col [nzLg]="6" [nzSm]="12" [nzXs]="24" class="task-col mb-7">
+                    <nz-card [nzTitle]="task.title" [nzActions]="[actionInfo, actionRetract, actionEdit]">
+                        <div nz-row>
+                            <div nz-col class="mb-2 sub-title" [nzSpan]="6">任务ID:</div>
+                            <div nz-col class="mb-2" [nzSpan]="18">{{ task.id }}</div>
+                            <div nz-col class="mb-2 sub-title" [nzSpan]="6">类型:</div>
+                            <div nz-col class="mb-2" [nzSpan]="18">{{ task.type }}</div>
+                            <div nz-col class="mb-2 sub-title" [nzSpan]="6">绩效:</div>
+                            <div nz-col class="mb-2" [nzSpan]="18">{{ task.performance }}</div>
+                            <div nz-col class="mb-2" [nzSpan]="24">
+                                <app-status-badge [statusProp]="task.reviewStatus"></app-status-badge>
+                            </div>
+                        </div>
+                    </nz-card>
+                    <ng-template #actionInfo>
+                        <a><i nz-icon nzType="more" nzTheme="outline"></i> 详情</a>
+                    </ng-template>
+                    <ng-template #actionRetract>
+                        <a (click)="retract(task.id)"><i nz-icon nzType="undo" nzTheme="outline"></i> 撤回</a>
+                    </ng-template>
+                    <ng-template #actionEdit>
+                        <a><i nz-icon nzType="edit" nzTheme="outline"></i> 编辑</a>
+                    </ng-template>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <nz-empty nzNotFoundContent="没有数据"></nz-empty>
+        </ng-template>
+    </div>
+</div>
+
+<nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="任务分解"
+    (nzOnCancel)="isVisible = false"
+    (nzOnOk)="handleOk()"
+    [nzWidth]="700"
+>
+    <app-task-form #taskForm (formPayload)="onDispatchTask($event)" [isDispatchForm]="true"></app-task-form>
+</nz-modal>

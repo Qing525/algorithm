@@ -1,0 +1,41 @@
+<div class="inner-content">
+    <nz-table #basicTable [nzData]="listProp">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>分类</th>
+                <th>发起人</th>
+                <th>接收人</th>
+                <th>状态</th>
+                <th>备注</th>
+                <th>任务级别</th>
+                <th>结束时间</th>
+                <th>创建时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.title }}</td>
+                <td>{{ data.type }}</td>
+                <td>{{ data.initiatorUserId }}</td>
+                <td>{{ data.receiveUserId }}</td>
+                <td>
+                    <app-status-badge [statusProp]="data.reviewStatus"></app-status-badge>
+                </td>
+                <td>{{ data.remark }}</td>
+                <td>
+                    <app-task-level-icon [isSquire]="false" [level]="data.level"></app-task-level-icon>
+                </td>
+
+                <td>
+                    {{ data.endTime | date: 'yyyy-mm-dd HH:mm:ss' }}
+                </td>
+
+                <td>{{ data.initiateTime | dateDiff }}</td>
+            </tr>
+            <ng-template #nullTemplate>
+                <td>无</td>
+            </ng-template>
+        </tbody>
+    </nz-table>
+</div>

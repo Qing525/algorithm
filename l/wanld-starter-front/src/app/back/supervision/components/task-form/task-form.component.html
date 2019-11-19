@@ -1,0 +1,158 @@
+<div class="container">
+    <form nz-form [formGroup]="taskForm" (ngSubmit)="submitTask()">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="26" nzRequired="true" nzFor="type">任务分类</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="请选择类型">
+                <!-- TODO: 怎么动态编辑任务分类 -->
+                <nz-tree-select
+                    formControlName="supervisionCategoryId"
+                    [nzNodes]="types"
+                    nzShowSearch
+                    nzPlaceHolder="选择分类"
+                >
+                </nz-tree-select>
+            </nz-form-control>
+            <nz-form-control [nzSm]="2" [nzXs]="24">
+                <!-- FIXME: 这个 button 触发了表单提交事件 -->
+                <button
+                    type="button"
+                    (click)="isVisible = true"
+                    nz-tooltip
+                    nz-button
+                    nzTooltipTitle="创建分类"
+                    nzTooltipPlacement="top"
+                    class="float-right"
+                    nzType="secondary"
+                    nzShape="circle"
+                >
+                    <i nz-icon nzType="edit" nzTheme="fill"></i>
+                </button>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="26" nzRequired="true" nzFor="type">任务类型</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="请选择任务周期">
+                <nz-radio-group formControlName="type">
+                    <label nz-radio nzValue="0">定期任务</label>
+                    <label nz-radio nzValue="1">周期任务</label>
+                </nz-radio-group>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!isDispatchForm">
+            <nz-form-label [nzSm]="6" [nzXs]="26" nzRequired="true" nzFor="level">
+                任务级别
+            </nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="请选择任务级别">
+                <nz-radio-group formControlName="level">
+                    <label nz-radio nzValue="0">一级任务</label>
+                    <label nz-radio nzValue="1">二级任务</label>
+                </nz-radio-group>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">标题</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="任务总得有标题吧!">
+                <input nz-input formControlName="title" id="title" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!isDispatchForm">
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="initiatorUserIdUI">
+                发起人/发起时间
+            </nz-form-label>
+            <nz-form-control class="mr-5" [nzSm]="6" [nzXs]="24" nzErrorTip="请填写发起人">
+                <nz-select
+                    formControlName="initiatorUserId"
+                    nzPlaceHolder="选择发起人"
+                    nzShowSearch
+                    nzAllowClear
+                    [nzLoading]="isLoading"
+                    (nzFocus)="searchContact()"
+                >
+                    <nz-option
+                        [nzLabel]="contact.name"
+                        [nzValue]="contact.id"
+                        *ngFor="let contact of contacts"
+                    ></nz-option>
+                </nz-select>
+            </nz-form-control>
+            <nz-form-control [nzSm]="7" nzErrorTip="请选择任务发起时间">
+                <nz-date-picker formControlName="initiateTime"> </nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">预计结束时间</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="预计结束时间!">
+                <nz-date-picker formControlName="endTime"> </nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="performance">绩效金额</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="请确定绩效金额">
+                <nz-input-number formControlName="performance" [nzStep]="50"></nz-input-number>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="performance">任务内容</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24" nzErrorTip="任务内容是什么?">
+                <textarea rows="4" nz-input formControlName="content"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="performance">备注信息</nz-form-label>
+            <nz-form-control [nzSm]="13" [nzXs]="24">
+                <textarea rows="4" nz-input formControlName="remark"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>
+
+<nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="创建任务分类 右键修改"
+    (nzOnCancel)="isVisible = false"
+    (nzOnOk)="isVisible = false"
+>
+    <nz-tree [nzData]="types" [nzExpandAll]="true" [nzTreeTemplate]="nzTreeTemplate"> </nz-tree>
+    <!-- 一下结构需要进一步优化  我感觉我在重复造轮子 -->
+    <div nz-row>
+        <div nz-col nzSpan="12">
+            <input nz-input placeholder="填写根节点内容" [(ngModel)]="rootNodeTitle" />
+        </div>
+        <div nz-col nzSpan="12">
+            <button type="button" class="ml-3" nz-button nzType="dashed" (click)="addRootNode()">添加根节点</button>
+        </div>
+    </div>
+    <div nz-row class="mt-3" *ngIf="isAppendChildNode">
+        <div nz-col nzSpan="12"><input nz-input placeholder="填写子节点内容" [(ngModel)]="childNodeTitle" /></div>
+        <div nz-col nzSpan="12">
+            <button type="button" class="ml-3" nz-button nzType="dashed" (click)="confirmAddNode()">确定</button>
+        </div>
+    </div>
+    <div nz-row class="mt-3" *ngIf="isEditChildNode">
+        <div nz-col nzSpan="12"><input nz-input placeholder="修改节点内容" [(ngModel)]="childNodeTitle" /></div>
+        <div nz-col nzSpan="12">
+            <button type="button" class="ml-3" nz-button nzType="dashed" (click)="confirmEditNode()">确定</button>
+        </div>
+    </div>
+
+    <ng-template #nzTreeTemplate let-node>
+        <span (contextmenu)="contextMenu($event, menu)">
+            <span>{{ node.title }}</span>
+        </span>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item (click)="deleteNode(node.origin)">删除节点</li>
+                <li nz-menu-item (click)="addChildNode(node.origin)">追加子节点</li>
+                <li nz-menu-item (click)="editNode(node.origin)">修改节点</li>
+            </ul>
+        </nz-dropdown-menu>
+    </ng-template>
+</nz-modal>

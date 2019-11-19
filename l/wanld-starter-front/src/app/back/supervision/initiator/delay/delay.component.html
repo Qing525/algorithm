@@ -1,0 +1,26 @@
+<div class="inner-content">
+    <nz-table #basicTable [nzData]="delayList">
+        <thead>
+            <tr>
+                <th>任务id</th>
+                <th>延期主题</th>
+                <th>延期原因</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.id }}</td>
+                <td>{{ data.title }}</td>
+                <td>{{ data.cause }}</td>
+                <td>{{ data.endTime | date: 'yyyy-mm-dd hh:mm:ss' }}</td>
+                <td>
+                    <a>审批</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a>驳回</a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

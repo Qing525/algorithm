@@ -1,0 +1,136 @@
+<nz-layout>
+  <nz-header>
+    <app-front-nav></app-front-nav>
+  </nz-header>
+  <nz-content>
+    <div class="back">
+      <div class="register">
+        <div class="text-center">
+          <h2>欢迎注册使用</h2>
+        </div>
+        <form
+          nz-form
+          [formGroup]="registerForm"
+          class="register-form"
+          (ngSubmit)="register()"
+        >
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>请输入昵称</nz-form-label>
+            <nz-form-control [nzSpan]="13" nzHasFeedback>
+              <nz-input-group nzPrefixIcon="user">
+                <input
+                  nz-input
+                  formControlName="nickname"
+                  placeholder="请输入昵称"
+                />
+              </nz-input-group>
+              <nz-form-explain *ngIf="nickname.invalid && nickname.dirty">
+                <ng-container *ngIf="nickname.hasError('required')">
+                  昵称不能为空！
+                </ng-container>
+                <ng-container *ngIf="nickname.hasError('maxlength')">
+                  昵称不能超过16个字符！
+                </ng-container>
+                <ng-container *ngIf="nickname.hasError('nickname')">
+                  {{ nickname.getError('nickname') }}
+                </ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>请输入邮箱</nz-form-label>
+            <nz-form-control [nzSpan]="13" nzHasFeedback>
+              <nz-input-group nzPrefixIcon="mail">
+                <input
+                  type="email"
+                  nz-input
+                  formControlName="emailAddress"
+                  placeholder="请输入邮箱"
+                />
+              </nz-input-group>
+              <nz-form-explain *ngIf="emailAddress.invalid && emailAddress.dirty">
+                <ng-container *ngIf="emailAddress.hasError('required')">
+                  邮箱不能为空！
+                </ng-container>
+                <ng-container *ngIf="emailAddress.hasError('maxlength')">
+                  邮箱不能超过64个字符！
+                </ng-container>
+                <ng-container *ngIf="emailAddress.hasError('email')">
+                  邮箱格式不正确！
+                </ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>请输入密码</nz-form-label>
+            <nz-form-control [nzSpan]="13" nzHasFeedback>
+              <nz-input-group nzPrefixIcon="lock">
+                <input
+                  type="password"
+                  nz-input
+                  formControlName="password"
+                  placeholder="请输入密码"
+                />
+              </nz-input-group>
+              <nz-form-explain *ngIf="password.invalid && password.dirty">
+                <ng-container *ngIf="password.hasError('required')">
+                  密码不能为空！
+                </ng-container>
+                <ng-container *ngIf="password.hasError('minlength')">
+                  请输入至少6位密码！
+                </ng-container>
+                <ng-container *ngIf="password.hasError('maxlength')">
+                  请输入小于64位密码！
+                </ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>请再次输入密码</nz-form-label>
+            <nz-form-control [nzSpan]="13" nzHasFeedback>
+              <nz-input-group nzPrefixIcon="lock">
+                <input
+                  type="password"
+                  nz-input
+                  formControlName="confirmPassword"
+                  placeholder="请再次输入密码"
+                />
+              </nz-input-group>
+              <nz-form-explain
+                *ngIf="confirmPassword.invalid && confirmPassword.dirty"
+              >
+                <ng-container *ngIf="confirmPassword.hasError('required')">
+                  确认密码不能为空！
+                </ng-container>
+                <ng-container *ngIf="confirmPassword.hasError('confirm')">
+                  两次输入密码不一致！
+                </ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control [nzSpan]="17" [nzOffset]="7">
+              <button
+                nz-button
+                [disabled]="registerForm.invalid"
+                [nzType]="'primary'"
+              >
+                注册
+              </button>
+              <a [routerLink]="['/login']" nz-type="link" class="ml-5"
+                >返回登陆</a
+              >
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+        <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+        <ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+      </div>
+    </div>
+  </nz-content>
+  <nz-footer>
+    <app-footer></app-footer>
+  </nz-footer>
+</nz-layout>

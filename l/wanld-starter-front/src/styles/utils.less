@@ -1,0 +1,53 @@
+.float-right{
+    float: right !important;
+}
+.float-left{
+    float: left !important;
+}
+.text-center{
+    text-align: center;
+}
+.d-inline{
+    display: inline !important;
+}
+.inner-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 100vh;
+}
+
+each(range(10), {
+    .pr-@{value} {
+      padding-right: (@value * 5px);
+    }
+});
+
+each(range(10), {
+    .pl-@{value} {
+        padding-left: (@value * 5px);
+    }
+});
+
+each(range(10), {
+    .ml-@{value} {
+        margin-left: (@value * 5px);
+    }
+});
+
+each(range(10), {
+    .mr-@{value} {
+        margin-right: (@value * 5px);
+    }
+});
+
+each(range(10), {
+    .mt-@{value} {
+        margin-top: (@value * 5px);
+    }
+});
+
+each(range(10), {
+    .mb-@{value} {
+        margin-bottom: (@value * 5px);
+    }
+});

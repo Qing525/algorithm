@@ -1,0 +1,96 @@
+<nz-card class="container">
+    <div nz-row>
+        <div nz-col nzSpan="18">
+            <div class="header">
+                <img src="../../../../assets/icons/task.svg" alt="" class="icon" />
+                <div class="title">
+                    <h2>{{supervision.title}}</h2>
+                </div>
+            </div>
+            <nz-descriptions class="content">
+                <nz-descriptions-item nzTitle="发起人">{{task.initiator}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="发起时间">{{supervision.initiateTime | date:"yyyy-MM-dd hh:mm:ss"}}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="计划完成时间">{{supervision.endTime | date:"yyyy-MM-dd hh:mm:ss"}}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="负责人/协办人">{{task.receiver}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="任务类型">
+                    <span [ngSwitch]=supervision.type>
+                        <p *ngSwitchCase="0">定期任务</p>
+                        <p *ngSwitchCase="1">周期任务</p>
+                    </span>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="任务分类">
+                    <span [ngSwitch]=supervision.level>
+                        <p *ngSwitchCase="0">一级任务</p>
+                        <p *ngSwitchCase="1">二级任务</p>
+                    </span>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="备注">{{task.remark}}</nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+        <span>
+            <div nz-col nzSpan="6">
+                <div class="buttons right-align">
+                    <button nz-button nzType="primary" (click)="complete(supervision.id)"
+                        *ngIf="!isComplete">完成任务</button>
+                    <!-- <button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure delete this task?"
+                        (nzOnConfirm)="confirm()" (nzOnCancel)="cancel()">完成任务</button> -->
+                    <button nz-button nzType="default" [routerLink]="[ '/b/mytask/apply' ]"
+                        [queryParams]='{id:supervision.id}' *ngIf="show">延期申请</button>
+                </div>
+                <div class="audit-info">
+                    <div class="mr-10" *ngIf="!isComplete">
+                        <div class="audit-title right-align">状态</div>
+                        <p class="status1" *ngIf="!show">
+                            进行中
+                        </p>
+                        <p class="status2" *ngIf="show">
+                            已逾期
+                        </p>
+                    </div>
+                    <div class="mr-10" *ngIf="isComplete">
+                        <div class="audit-title right-align">状态</div>
+                        <p class="status2">
+                            已完成
+                        </p>
+                    </div>
+                    <div>
+                        <div class="audit-title right-align">绩效金额</div>
+                        <p class="status">
+                            ￥ {{supervision.performance}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </div>
+    <div class="task-expand">
+        <nz-collapse [nzBordered]="false">
+            <nz-collapse-panel #content [nzHeader]="'详情'" [nzActive]="false">
+                <p>{{supervision.content}}</p>
+                <ng-template #expandedIcon let-active>
+                    {{ active }}
+                    <i nz-icon nzType="caret-right" class="ant-collapse-arrow"
+                        [nzRotate]="content.nzActive ? 90 : -90"></i>
+                </ng-template>
+            </nz-collapse-panel>
+        </nz-collapse>
+    </div>
+</nz-card>
+<div class="inner-content">
+    <div>
+        <h3>项目进度</h3>
+        <nz-steps [nzCurrent]="1" [nzProgressDot]="progressTemplate">
+            <nz-step nzTitle="创建单据" nzDescription="You can hover on the dot."></nz-step>
+            <nz-step nzTitle="项目进行" nzDescription="You can hover on the dot."></nz-step>
+            <nz-step nzTitle="项目交付" nzDescription="You can hover on the dot."></nz-step>
+            <nz-step nzTitle="完成" nzDescription="You can hover on the dot."></nz-step>
+        </nz-steps>
+        <ng-template #progressTemplate let-dot let-status="status" let-index="index+1">
+            <span nz-popover nzContent="steps {{ index }} status: {{ status }}" style="margin-left: -100%;">
+                <ng-template [ngTemplateOutlet]="dot"></ng-template>
+            </span>
+        </ng-template>
+    </div>
+</div>

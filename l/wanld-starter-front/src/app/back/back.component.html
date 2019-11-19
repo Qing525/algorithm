@@ -1,0 +1,49 @@
+<nz-layout class="app-layout">
+    <nz-sider
+        class="menu-sidebar"
+        nzTheme="light"
+        nzCollapsible
+        nzWidth="256px"
+        nzBreakpoint="md"
+        [(nzCollapsed)]="isCollapsed"
+        [nzTrigger]="null"
+    >
+        <div class="sidebar-logo">
+            <a routerLink="/" target="">
+                <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo" />
+                <h1>万令达</h1>
+            </a>
+        </div>
+        <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+            <li nz-submenu nzOpen [nzTitle]="menu.name" nzIcon="dashboard" *ngFor="let menu of menuTree">
+                <ul *ngFor="let twoLevel of menu.children">
+                    <li nz-submenu [nzTitle]="twoLevel.name" *ngIf="twoLevel.children; else noThreeLevel">
+                        <ul>
+                            <li nz-menu-item nzMatchRouter *ngFor="let threeLevel of twoLevel.children">
+                                <a [routerLink]="threeLevel.uri">{{ threeLevel.name }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <ng-template #noThreeLevel>
+                        <li nz-menu-item nzMatchRouter="true">
+                            <a [routerLink]="twoLevel.uri">{{ twoLevel.name }}</a>
+                        </li>
+                    </ng-template>
+                </ul>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="app-header">
+                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+                </span>
+                <app-nav-user></app-nav-user>
+            </div>
+        </nz-header>
+        <nz-content>
+            <router-outlet></router-outlet>
+        </nz-content>
+    </nz-layout>
+</nz-layout>

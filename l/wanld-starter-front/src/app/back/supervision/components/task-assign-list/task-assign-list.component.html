@@ -1,0 +1,71 @@
+<div class="list-item" nz-row nzType="flex" nzAlign="middle">
+    <div nz-col nzSpan="2">
+        <!-- 0 一级 1 二级 2 子任务  -->
+        <app-task-level-icon [level]="dataProp.level" [isSquire]="true"></app-task-level-icon>
+    </div>
+    <div nz-col nzSpan="7">
+        <div class="task-info">
+            <div class="title mb-1">
+                {{ dataProp.title }}
+            </div>
+            <div class="remark">
+                {{ dataProp.remark }}
+            </div>
+        </div>
+    </div>
+    <div nz-col nzSpan="4">
+        <div class="item-info ">
+            <div class="title mb-2">发起人</div>
+            <div class="name">{{ dataProp.initiator }}</div>
+        </div>
+    </div>
+    <div nz-col nzSpan="4">
+        <div class="item-info ">
+            <div class="title">开始时间</div>
+            <div class="name">
+                {{ dataProp.initiateTime | date: 'yyyy-mm-dd HH:mm:ss' }}
+            </div>
+        </div>
+    </div>
+    <div nz-col nzSpan="3">
+        <nz-progress [nzPercent]="0" nzSize="small"></nz-progress>
+    </div>
+    <div nz-col nzSpan="4">
+        <div class="item-operation ml-8" [ngSwitch]="dataProp.level">
+            <div *ngSwitchCase="0">
+                <a>一级任务不可拆分</a>
+            </div>
+            <div *ngSwitchCase="1">
+                <a
+                    routerLink="../assignment"
+                    [queryParams]="{
+                        pid: dataProp.id,
+                        level: dataProp.level,
+                        initiatorUserId: dataProp.initiatorUserId
+                    }"
+                >
+                    指派任务
+                </a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a class="task-expand" (click)="onExpand($event)">
+                    <i nz-icon nzType="down" nzTheme="outline" [nzRotate]="show ? 0 : -180"></i>
+                    更多</a
+                >
+            </div>
+            <div *ngSwitchCase="2">
+                <a class="ml-7 ">暂时未知协办人</a>
+            </div>
+        </div>
+    </div>
+</div>
+<nz-collapse [nzBordered]="false">
+    <nz-collapse-panel [nzShowArrow]="false" [nzActive]="show">
+        <p>
+            <nz-descriptions nzLayout="vertical">
+                <nz-descriptions-item nzTitle="任务内容">
+                    {{ dataProp.content }}
+                </nz-descriptions-item>
+            </nz-descriptions>
+        </p>
+    </nz-collapse-panel>
+</nz-collapse>

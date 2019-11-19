@@ -1,0 +1,25 @@
+<div class="inner-content">
+    <div>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                我的任务
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                任务列表
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                任务转派
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+    <div>
+        <nz-steps [nzCurrent]="3">
+            <nz-step nzTitle="填写转派信息"></nz-step>
+            <nz-step nzTitle="确认转派任务"> </nz-step>
+            <nz-step nzTitle="完成"></nz-step>
+        </nz-steps>
+    </div>
+    <nz-alert nzType="success" nzMessage="任务转派成功" nzDescription="任务转派成功，等待接收！" nzShowIcon></nz-alert>
+    <!-- <nz-alert nzType="error" nzMessage="任务转派失败" nzDescription="任务转派失败，请检查转派信息！" nzShowIcon></nz-alert> -->
+    <a nz-button [nzType]="'default'" [routerLink]="[ '/b/redeploy' ]">返回首页</a>
+</div>

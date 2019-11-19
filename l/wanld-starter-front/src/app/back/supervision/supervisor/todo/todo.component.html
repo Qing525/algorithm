@@ -1,0 +1,26 @@
+<app-audit-dashboard></app-audit-dashboard>
+<div class="inner-content">
+    <div nz-row nzType="flex" nzJustify="space-between">
+        <div nz-col nzSpan="5">
+            <h2>任务列表</h2>
+        </div>
+        <div nz-col nzSpan="8">
+            <ng-template #totalTemplate let-total> 总计 {{ total }} 条 </ng-template>
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input type="text" nz-input placeholder="请输入任务名称, 级别" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch><i nz-icon nzType="search" nzTheme="outline"></i></ng-template>
+        </div>
+    </div>
+
+    <div class="list ml-3 mt-6 pt-2 pb-4">
+        <ng-container *ngIf="approvedList; else elseTemplate">
+            <div class="items" *ngFor="let item of approvedList">
+                <app-task-assign-list [dataProp]="item"></app-task-assign-list>
+            </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <nz-empty title="没有待分配任务"></nz-empty>
+        </ng-template>
+    </div>
+</div>

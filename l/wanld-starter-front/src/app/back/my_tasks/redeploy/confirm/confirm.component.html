@@ -1,0 +1,45 @@
+<div class="inner-content">
+    <div>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                我的任务
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                任务列表
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                任务转派
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+    <div>
+        <nz-steps [nzCurrent]="1">
+            <nz-step nzTitle="填写转派信息"></nz-step>
+            <nz-step nzTitle="确认转派任务"> </nz-step>
+            <nz-step nzTitle="完成"></nz-step>
+        </nz-steps>
+    </div>
+    <nz-alert nzType="info" nzMessage="请仔细检查转派内容，转派后任务将发送给指定接收人！" nzShowIcon></nz-alert>
+    <div class="taskInfor">
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label>任务名称</nz-form-label>
+                {{supervision.title}}
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label>接收人</nz-form-label>
+                {{receiver.username}}
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label>附加信息</nz-form-label>
+                {{infor.infor}}
+            </nz-form-item>
+            <nz-form-item>
+                <a [routerLink]="[ '/b/mytask/complete' ]" [queryParams]='{id:infor.taskname}' (click)="submit()"
+                    nz-button [nzType]="'primary'">提交</a>
+                <a [routerLink]="[ '/b/mytask/redeploy' ]" nz-button [nzType]="'default'">上一步</a>
+            </nz-form-item>
+        </form>
+    </div>
+    <nz-divider></nz-divider>
+</div>

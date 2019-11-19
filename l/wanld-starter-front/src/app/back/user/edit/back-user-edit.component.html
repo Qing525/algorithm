@@ -1,0 +1,127 @@
+<nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="修改用户信息"
+    (nzOnOk)="save()"
+    (nzOnCancel)="hideModal()"
+    [nzFooter]="modalFooter"
+>
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="hideModal()">取消</button>
+        <button nz-button nzType="primary" (click)="save()" [nzLoading]="isLoading" [disabled]="formGroup.invalid">
+            确定
+        </button>
+    </ng-template>
+    <nz-tabset *ngIf="editUser">
+        <nz-tab nzTitle="用户信息" id="tab1">
+            <form class="form-horizontal" [formGroup]="formGroup">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>用户名</nz-form-label>
+                    <nz-form-control [nzSpan]="13" nzHasFeedback [nzErrorTip]="errorUsernameTip">
+                        <input nz-input formControlName="username" placeholder="请输入用户名" />
+                        <nz-form-explain #errorUsernameTip *ngIf="username.invalid && username.dirty">
+                            <ng-container *ngIf="username.hasError('required')">
+                                用户名不能为空！
+                            </ng-container>
+                            <ng-container *ngIf="username.hasError('maxlength')">
+                                用户名不能超过16个字符！
+                            </ng-container>
+                            <ng-container *ngIf="username.hasError('username')">
+                                {{ username.getError('username') }}
+                            </ng-container>
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>邮箱</nz-form-label>
+                    <nz-form-control [nzSpan]="13" nzHasFeedback [nzErrorTip]="errorEmailTip">
+                        <input nz-input formControlName="email" placeholder="邮箱" />
+                        <nz-form-explain #errorEmailTip *ngIf="email.invalid && email.dirty">
+                            <ng-container *ngIf="email.hasError('required')">
+                                邮箱不能为空！
+                            </ng-container>
+                            <ng-container *ngIf="email.hasError('maxlength')">
+                                邮箱不能超过16个字符！
+                            </ng-container>
+                            <ng-container *ngIf="email.hasError('email')">
+                                请输入正确邮箱格式!
+                            </ng-container>
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>昵称</nz-form-label>
+                    <nz-form-control [nzSpan]="13" nzHasFeedback [nzErrorTip]="nickNameTip">
+                        <input nz-input formControlName="nickName" placeholder="昵称" />
+                        <nz-form-explain #nickNameTip *ngIf="nickName.invalid && nickName.dirty">
+                            <ng-container *ngIf="nickName.hasError('required')">
+                                昵称不能为空！
+                            </ng-container>
+                            <ng-container *ngIf="nickName.hasError('maxlength')">
+                                昵称不能超过8个字符！
+                            </ng-container>
+                            <ng-container *ngIf="nickName.hasError('nickName')">
+                                {{ nickName.getError('nickName') }}
+                            </ng-container>
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>姓氏</nz-form-label>
+                    <nz-form-control [nzSpan]="13" nzHasFeedback nzErrorTip="errorSurnameTip">
+                        <input nz-input formControlName="surname" placeholder="姓氏" />
+                        <nz-form-explain #errorSurnameTip *ngIf="surname.invalid && surname.dirty">
+                            <ng-container *ngIf="surname.hasError('required')">
+                                姓氏不能为空！
+                            </ng-container>
+                            <ng-container *ngIf="surname.hasError('maxlength')">
+                                姓氏不能超过4个字符！
+                            </ng-container>
+                            <ng-container *ngIf="surname.hasError('chinese')">
+                                {{ surname.getError('chinese') }}
+                            </ng-container>
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>名字</nz-form-label>
+                    <nz-form-control [nzSpan]="13" nzHasFeedback nzErrorTip="errornameTip">
+                        <input nz-input formControlName="name" placeholder="名字" />
+                        <nz-form-explain #errnameTip *ngIf="name.invalid && name.dirty">
+                            <ng-container *ngIf="name.hasError('required')">
+                                名字不能为空！
+                            </ng-container>
+                            <ng-container *ngIf="name.hasError('maxlength')">
+                                名字不能超过8个字符！
+                            </ng-container>
+                            <ng-container *ngIf="name.hasError('chinese')">
+                                {{ name.getError('chinese') }}
+                            </ng-container>
+                        </nz-form-explain>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <label nz-checkbox [(ngModel)]="editUser.isActive" [ngModelOptions]="{ standalone: true }"
+                        >已激活</label
+                    >
+                </nz-form-item>
+            </form>
+        </nz-tab>
+
+        <nz-tab nzTitle="用户角色">
+            <div class="form-group row">
+                <div class="col-auto" *ngFor="let role of roles">
+                    <div class="form-check checkbox">
+                        <label nz-checkbox [(ngModel)]="role.isActive" (ngModelChange)="(role.isActive)">{{
+                            role.name
+                        }}</label>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+</nz-modal>

@@ -1,0 +1,44 @@
+<nz-card>
+    <div nz-row>
+        <div nz-col nzSpan="24">
+            <button (click)="addModal.showModal()" class="float-right" nz-button nzType="primary" nzShape="circle">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <nz-table #table [nzData]="dataSet" [nzTotal]="dataTotal">
+            <thead>
+                <tr>
+                    <th>角色名</th>
+                    <!-- <th>显示名</th> -->
+                    <th>创建时间</th>
+                    <th>默认的</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of table.data" [ngClass]="{ active: selectedSemester == data }">
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.createdTime | date }}</td>
+                    <!-- <td>{{data.description}}</td> -->
+                    <td>{{ data.isStatic ? '默认的' : '自定义' }}</td>
+                    <td>
+                        <a tabindex (click)="editModal.showModal(data)" [attr.disabled]="data.isStatic ? '' : null">
+                            <i nz-icon nzType="edit" theme="outline"></i>
+                        </a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a tabindex (click)="delete(data)" [attr.disabled]="data.isStatic ? '' : null">
+                            <i nz-icon nzType="delete" theme="outline"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+
+    <app-back-role-add #addModal (modalSave)="ngOnInit()"></app-back-role-add>
+
+    <app-back-role-edit #editModal (modalSave)="ngOnInit()"></app-back-role-edit>
+</nz-card>

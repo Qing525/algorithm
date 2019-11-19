@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>wld-main</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>wld-main</name>
+    <description>wld-main project for wld</description>
+
+    <properties>
+
+    </properties>
+
+    <parent>
+        <groupId>com.wld</groupId>
+        <artifactId>wld</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wld</groupId>
+            <artifactId>wld-msg</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wld</groupId>
+            <artifactId>wld-mail</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.flywaydb</groupId>-->
+        <!--            <artifactId>flyway-core</artifactId>-->
+        <!--        </dependency>-->
+
+    </dependencies>
+    <build>
+        <finalName>wld-back</finalName>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.8</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>upload-deploy</id>
+                        <!-- 运行package打包的同时运行upload-single和sshexec -->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>upload-single</goal>
+                            <goal>sshexec</goal>
+                        </goals>
+                        <configuration>
+                            <fromFile>target/wld-back.jar</fromFile>
+                            <url>scp://root:wanld-al1@39.100.70.152/opt/wanld-starter/backend</url>
+                            <commands>
+                                <!-- 杀死原来的进程 -->
+                                <command>pkill -f /opt/wanld-starter/backend/wld-back.jar</command>
+                                <!-- 重新启动test.jar，程序的输出结果写到nohup.out文件中 -->
+                                <command>nohup java -jar /opt/wanld-starter/backend/wld-back.jar &amp;</command>
+                            </commands>
+                            <displayCommandOutputs>true</displayCommandOutputs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

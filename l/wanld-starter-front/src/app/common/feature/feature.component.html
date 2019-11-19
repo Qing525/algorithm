@@ -1,0 +1,31 @@
+<app-front-nav></app-front-nav>
+
+<div class="container mt-3">
+    <div class='PsonInfor'>
+            <nz-card>
+                <nz-tabset [nzTabPosition]="breakpointXS?'top': 'left'">
+                    <nz-tab nzTitle="个人信息" (nzClick)="getUserInfo()">
+                        <div>
+                            <p><nz-avatar nzIcon="user"></nz-avatar>：[~_~暂未实现该功能，耐心等待]</p>
+                        </div>
+                        <p>性别：{{user?.gender|gender}}
+                            <a class="ml-3" (click)="changeGender()" tabindex>
+        
+                                <ng-container *ngIf="!genderLoding; else elseTemplate">
+                                    修改
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <i nz-icon type="loading" theme="outline"></i>
+                                </ng-template>
+                            </a>
+                        </p>
+                        <p>昵称：{{user?.nickName}}</p>
+                        <p>邮箱：{{user?.email}}</p>
+                    </nz-tab>
+                    <nz-tab nzTitle="修改密码">
+                        <app-change-password></app-change-password>
+                    </nz-tab>
+                </nz-tabset>
+            </nz-card>
+        </div>
+</div>

@@ -1,0 +1,76 @@
+<nz-layout>
+    <nz-header>
+        <div class="logo">
+            <a href="#"></a>
+        </div>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal">
+            <li nz-menu-item routerLink="/">首页</li>
+        </ul>
+    </nz-header>
+
+    <nz-content>
+        <div class='back'>
+            <div class="login">
+                <div class="login-title">
+                    <h2>账号密码登陆</h2>
+                </div>
+                <form nz-form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-input-group [nzPrefix]="prefixUser">
+                                <input type="text" nz-input formControlName="username" placeholder="请输入邮箱" />
+                            </nz-input-group>
+                            <nz-form-explain *ngIf="
+                  loginForm.get('username').dirty &&
+                  loginForm.get('username').errors
+                ">
+                                请输入正确的邮箱</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-input-group [nzPrefix]="prefixLock">
+                                <input type="password" nz-input formControlName="password" placeholder="输入密码" />
+                            </nz-input-group>
+                            <nz-form-explain *ngIf="
+                  loginForm.get('password').dirty &&
+                  loginForm.get('password').errors
+                ">
+                                Please 输入密码</nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <div class="example-input">
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="输入验证码错误" [nzValidateStatus]="captchaValidateStatus">
+                                <nz-input-group>
+                                    <input nz-input formControlName='code' placeholder="请输入验证码" nzSize="default" />
+                                    <img [src]="captchaUri" alt='' (click)="getCaptchaId()">
+                                </nz-input-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <nz-form-item>
+                        <nz-form-control>
+                            <label nz-checkbox formControlName="rememberClient">
+                                <span>记住密码</span>
+                            </label>
+                            <button nz-button class="login-form-button" [nzType]="'primary'">
+                                登录
+                            </button>
+                            <a [routerLink]="['/register']">注册</a>
+                            <a class="pl-3" tabindex [routerLink]="['/find-password']">忘记密码</a>
+                        </nz-form-control>
+                    </nz-form-item>
+                </form>
+                <ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+                <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
+                <ng-template #prefixCheck><i nz-icon nzType="safety-certificate"></i></ng-template>
+            </div>
+        </div>
+    </nz-content>
+
+    <nz-footer>
+        <app-footer></app-footer>
+    </nz-footer>
+</nz-layout>

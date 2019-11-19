@@ -1,0 +1,41 @@
+<nz-header class="front-nav">
+    <div class="logo">
+        <a href="#"></a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+        <li nz-menu-item><a routerLink="/b">后台</a></li>
+        <li nz-menu-item><a routerLink="/home">首页</a></li>
+    </ul>
+
+    <ng-container *ngIf="user; else elseTemplate">
+        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right mr-5">
+            <li nz-menu-item nz-popover nzPlacement="bottomRight" [nzContent]="contentTemplate">
+                <a class="nav-link float-right">
+                    <nz-avatar nzIcon="user" [nzSrc]="getAvatarUrl()"></nz-avatar>
+                    {{user.nickname?user.nickname:user.username}}
+                </a>
+            </li>
+            <ng-template #contentTemplate>
+                <ul nz-menu nzSelectable="false" style="border-right-width: 0">
+                    <li nz-menu-item [routerLink]="['/feature']">个人中心</li>
+                    <li nz-menu-item [routerLink]="['/b']">管理后台</li>
+                    <li nz-menu-item (click)="logout()">退出登录</li>
+                </ul>
+            </ng-template>
+        </ul>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right mr-5">
+            <li class="nav-item " (click)="login()">
+                <a class="nav-link">
+                    登陆
+                </a>
+            </li>
+            <li class="nav-item ml-3" [routerLink]="['/register']">
+                <a class="nav-link">
+                    注册&nbsp;&nbsp;&nbsp;
+                </a>
+            </li>
+        </ul>
+    </ng-template>
+</nz-header>

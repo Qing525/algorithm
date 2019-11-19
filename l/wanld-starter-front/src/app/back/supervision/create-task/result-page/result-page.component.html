@@ -1,0 +1,20 @@
+<ng-container *ngIf="isSuccess; else elseTemplate">
+    <!-- 从路由把创建成功的几个重要信息都拿过来 -->
+    <nz-result
+        nzStatus="success"
+        nzTitle="任务创建成功!"
+        [nzSubTitle]="'任务编号: ' + id + ' 已经提交, 审核将在 1 ~ 2 个工作日内完成, 请耐心等待 ! '"
+    >
+        <div nz-result-extra>
+            <button nz-button nzType="primary" routerLink="../setup">再创建一个任务</button>
+            <!-- <button nz-button>Buy Again</button> -->
+        </div>
+    </nz-result>
+</ng-container>
+<ng-template #elseTemplate>
+    <nz-result nzStatus="warning" nzTitle="也许是网络不好">
+        <div nz-result-extra>
+            <button nz-button nzType="primary">Go Console</button>
+        </div>
+    </nz-result>
+</ng-template>

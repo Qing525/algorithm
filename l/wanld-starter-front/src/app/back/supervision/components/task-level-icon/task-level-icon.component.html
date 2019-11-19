@@ -1,0 +1,14 @@
+<ng-container *ngIf="isSquire; else elseTemplate">
+    <nz-avatar
+        class="icon"
+        [ngClass]="{ isChild: isChild }"
+        [ngStyle]="{ 'background-color': color }"
+        [nzShape]="'square'"
+        [nzText]="text"
+        nzSize="large"
+    >
+    </nz-avatar>
+</ng-container>
+<ng-template #elseTemplate>
+    <nz-tag [nzColor]="color">{{ text }}</nz-tag>
+</ng-template>

@@ -1,0 +1,16 @@
+<nz-layout>
+
+    <app-front-nav></app-front-nav>
+
+
+    <nz-content>
+        <nz-carousel [nzEffect]="effect">
+            <div nz-carousel-content *ngFor="let index of array">
+                <img src="{{ index.pic }}" />
+            </div>
+        </nz-carousel>
+    </nz-content>
+    <nz-footer>
+        <app-footer></app-footer>
+    </nz-footer>
+</nz-layout>

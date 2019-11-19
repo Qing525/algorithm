@@ -1,0 +1,50 @@
+<div class="inner-content">
+    <nz-descriptions nzTitle="延期申请" nzBordered>
+        <nz-descriptions-item nzTitle="任务名称">{{supervision.title}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务类型">
+            <span [ngSwitch]='supervision.type'>
+                <p *ngSwitchCase="0">
+                    定期任务
+                </p>
+                <p *ngSwitchCase="1">
+                    周期任务
+                </p>
+            </span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="任务级别">
+            <span [ngSwitch]='supervision.level'>
+                <p *ngSwitchCase="0">
+                    一级任务
+                </p>
+                <p *ngSwitchCase="1">
+                    二级任务
+                </p>
+            </span></nz-descriptions-item>
+        <nz-descriptions-item nzTitle="绩效金额">{{supervision.performance}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="备注">{{supervision.remark}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="发起时间" [nzSpan]="2">
+            {{supervision.initiateTime | date:"yyyy-MM-dd hh:mm:ss"}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="截止时间" [nzSpan]="2">
+            {{supervision.endTime | date:"yyyy-MM-dd hh:mm:ss"}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="申请延期时间" [nzSpan]="2">{{delay.endTime | date:"yyyy-MM-dd hh:mm:ss"}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="审核状态" [nzSpan]="3">
+            <span [ngSwitch]='delay.isReview'>
+                <p *ngSwitchCase="0">
+                    <nz-badge nzStatus="processing" nzText="未审核"></nz-badge>
+                </p>
+                <p *ngSwitchCase="1">
+                    <nz-badge nzStatus="success" nzText="通过"></nz-badge>
+                </p>
+                <p *ngSwitchCase="2">
+                    <nz-badge nzStatus="error" nzText="驳回"></nz-badge>
+                </p>
+            </span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="逾期原因">
+            {{delay.cause}}
+        </nz-descriptions-item>
+    </nz-descriptions>
+</div>

@@ -1,0 +1,10 @@
+<div class="inner-content">
+    <nz-tabset (nzSelectChange)="selectChange($event)">
+        <nz-tab nzTitle="审核通过">
+            <app-task-list [listProp]="tasks"></app-task-list>
+        </nz-tab>
+        <nz-tab nzTitle="审核驳回">
+            <app-task-list [listProp]="tasks"></app-task-list>
+        </nz-tab>
+    </nz-tabset>
+</div>

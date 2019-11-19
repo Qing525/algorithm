@@ -1,0 +1,17 @@
+<span [ngSwitch]="status">
+    <p *ngSwitchCase="0">
+        <nz-badge nzText="审核中" nzStatus="processing"></nz-badge>
+    </p>
+    <p *ngSwitchCase="1">
+        <nz-badge nzText="通过" nzStatus="success"></nz-badge>
+    </p>
+    <p *ngSwitchCase="2">
+        <nz-badge nzText="驳回" nzStatus="error"></nz-badge>
+    </p>
+    <!-- <p *ngSwitchCase="3">
+        <nz-badge nzText="复审中" nzStatus="warning"></nz-badge>
+    </p> -->
+</span>
+<!-- 附加 -->
+<!-- <nz-badge nzText="已更新" nzStatus="default"></nz-badge>
+<nz-badge nzText="警告" nzStatus="warning"></nz-badge> -->

@@ -1,0 +1,19 @@
+<ng-container *ngIf="data; else elseTemplate">
+    <!-- 发起人审批数据 -->
+    <div *ngFor="let item of data">
+        <!-- 怎么按照时间顺序显示 => 拿到数据之后先排序 ?-->
+        <app-audit-card
+            [hasAction]="true"
+            [dataProp]="item"
+            (superviseEvent)="onEventHandler($event)"
+            (errorEvent)="onError($event)"
+        ></app-audit-card>
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <nz-result nzStatus="success" [nzTitle]="'好棒啊! 你已经审核了所有的任务'">
+        <div nz-result-extra>
+            <button nz-button nzType="primary">Next</button>
+        </div>
+    </nz-result>
+</ng-template>

@@ -1,0 +1,33 @@
+<ng-container *ngIf="user; else elseTemplate">
+    <ul nz-menu nzTheme="light" nzMode="horizontal" class="float-right mr-5">
+        <li nz-menu-item nz-popover nzPlacement="bottomRight" [nzContent]="contentTemplate">
+            <a class="nav-link float-right">
+                <nz-avatar nzIcon="user" [nzSrc]="getAvatarUrl()"></nz-avatar>
+
+                {{ user.nickname ? user.nickname : user.username }}
+            </a>
+        </li>
+        <ng-template #contentTemplate>
+            <ul nz-menu nzSelectable="false" style="border-right-width: 0">
+                <li nz-menu-item [routerLink]="['/feature']">个人中心</li>
+                <li nz-menu-item (click)="logout()">退出登录</li>
+            </ul>
+        </ng-template>
+    </ul>
+</ng-container>
+<ng-template #elseTemplate>
+    <div>
+        <ul nz-menu nzTheme="light" nzMode="horizontal" class="float-right mr-5">
+            <li class="nav-item float-right" (click)="login()">
+                <a class="nav-link">
+                    登陆
+                </a>
+            </li>
+            <li class="nav-item float-right" [routerLink]="['/register']">
+                <a class="nav-link">
+                    注册&nbsp;&nbsp;&nbsp;
+                </a>
+            </li>
+        </ul>
+    </div>
+</ng-template>

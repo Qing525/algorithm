@@ -1,0 +1,10 @@
+<ng-container *ngIf="data; else elseTemplate">
+    <app-audit-dashboard></app-audit-dashboard>
+
+    <div *ngFor="let item of data">
+        <app-audit-card [hasAction]="false" [dataProp]="item"> </app-audit-card>
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <nz-empty nzNotFoundContent="好棒啊! 你的任务都被审核了"></nz-empty>
+</ng-template>

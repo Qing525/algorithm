@@ -1,0 +1,72 @@
+<div nz-row class="task-daskboard">
+    <div nz-col nzSpan="8">
+        <nz-statistic [nzValue]="5 | number" [nzTitle]="'待接收任务'"></nz-statistic>
+    </div>
+    <div nz-col nzSpan="8">
+        <nz-statistic [nzValue]="2 | number" [nzTitle]="'进行中任务'"></nz-statistic>
+    </div>
+    <div nz-col nzSpan="8">
+        <nz-statistic [nzValue]="3 | number" [nzTitle]="'本周已完成任务'"></nz-statistic>
+    </div>
+</div>
+<div class="inner-content">
+    <nz-table #columnTable [nzData]="tasklist" [nzScroll]="{ x: '1100px' }" *ngIf="show">
+        <thead>
+            <tr>
+                <th nzWidth="100px" nzLeft="0px">任务类型</th>
+                <th nzWidth="100px">任务级别</th>
+                <th nzWidth="100px" nzLeft="100px">任务名称</th>
+                <th nzWidth="100px">发起人</th>
+                <th nzWidth="100px">发起时间</th>
+                <th nzWidth="100px">任务状态</th>
+                <th nzWidth="100px" nzRight="0px">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of columnTable.data">
+                <td nzLeft="0px">
+                    <span [ngSwitch]=data.type>
+                        <p *ngSwitchCase="0">定期任务</p>
+                        <p *ngSwitchCase="1">周期任务</p>
+                    </span>
+                </td>
+                <td>
+                    <span [ngSwitch]=data.level>
+                        <p *ngSwitchCase="0">一级任务</p>
+                        <p *ngSwitchCase="1">二级任务</p>
+                    </span>
+                </td>
+                <td nzLeft="100px">{{ data.title }}</td>
+                <td>{{ data.initiatorUserId }}</td>
+                <td>{{ data.initiateTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
+                <td nzRight="100px">
+                    <span [ngSwitch]=data.isComplete>
+                        <p *ngSwitchCase="0">
+                            <span [ngSwitch]=data.isReceive>
+                                <nz-tag [nzColor]="'blue'" *ngSwitchCase="0">待接收</nz-tag>
+                                <nz-tag [nzColor]="'green'" *ngSwitchCase="1">已接收</nz-tag>
+                            </span>
+                        </p>
+                        <p *ngSwitchCase="1">
+                            <nz-tag [nzColor]="'gold'">已完成</nz-tag>
+                        </p>
+                    </span>
+                </td>
+                <td nzRight="0px">
+                    <span [ngSwitch]=data.isComplete>
+                        <p *ngSwitchCase="0">
+                            <span [ngSwitch]=data.isReceive>
+                                <a (click)="receive(data.id)" *ngSwitchCase="0">接收</a>
+                                <a (click)="process()" *ngSwitchCase="1">任务进展</a>
+                            </span>
+                        </p>
+                        <p *ngSwitchCase="1">
+
+                        </p>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <nz-empty *ngIf="!show"></nz-empty>
+</div>

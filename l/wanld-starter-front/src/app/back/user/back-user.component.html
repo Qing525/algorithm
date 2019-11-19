@@ -1,0 +1,58 @@
+<nz-card>
+    <div nz-row>
+        <div nz-col nzSpan="8" nzOffset="16">
+            <ng-template #totalTemplate let-total> 总计 {{ total }} 条 </ng-template>
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input type="text" nz-input [formControl]="searchName" placeholder="用户名、邮箱、昵称搜索" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch><i nz-icon nzType="search" nzTheme="outline"></i></ng-template>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <nz-table
+            #ajaxTable
+            [nzFrontPagination]="false"
+            [nzLoading]="isLoading"
+            [nzData]="dataSet"
+            [nzTotal]="dataTotal"
+            [nzShowTotal]="totalTemplate"
+            nzShowSizeChanger
+            [(nzPageIndex)]="pageIndex"
+            [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="getUserPage()"
+            (nzPageSizeChange)="getUserPage(true)"
+        >
+            <thead (nzSortChange)="sortData($event)" nzSingleSort>
+                <tr>
+                    <th nzShowSort nzSortKey="username">用户名</th>
+                    <th nzShowSort nzSortKey="email">邮箱</th>
+                    <th nzShowSort nzSortKey="nickname">昵称</th>
+                    <th nzShowSort nzSortKey="createdTime">注册时间</th>
+                    <th nzShowSort nzSortKey="loginTime">上次登陆</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of ajaxTable.data">
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.nickname }}</td>
+                    <td>{{ data.createdTime | date: 'medium' }}</td>
+                    <td>{{ data.loginTime | date: 'medium' }}</td>
+                    <td>
+                        <a tabindex (click)="edit.showModal(data)">
+                            <i nz-icon nzType="edit" theme="outline"></i>
+                        </a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a tabindex (click)="delete(data)">
+                            <i nz-icon nzType="delete" theme="outline"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+
+    <app-back-user-edit #edit (modalSave)="ngOnInit()"></app-back-user-edit>
+</nz-card>
